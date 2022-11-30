@@ -465,5 +465,22 @@ namespace cgp
 		shape.push_back(ux).push_back(uy).push_back(uz).push_back(sphere);
 		return shape;
 	}
-	
+
+	mesh mesh_primitive_point(vec3 const &p) {
+
+		mesh shape;
+		shape.position = {p};
+		shape.connectivity = {{}};
+		shape.fill_empty_field();
+		return shape;
+	}
+
+	mesh mesh_primitive_line(vec3 const &p0, vec3 const &p1) {
+
+		mesh shape;
+		shape.position = {p0,p1};
+		shape.connectivity = {{0,1,0}};
+		shape.fill_empty_field();
+		return shape;
+	}
 }

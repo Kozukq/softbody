@@ -1,6 +1,10 @@
 # This is a generic CMake setup for CGP library use
 cmake_minimum_required(VERSION 3.8) 
 
+# GSL library
+find_package(GSL REQUIRED)
+include_directories(${GSL_INCLUDE_DIR})
+
 # Relative path to the CGP library
 # => You may need to adapt this directory to your relative path in the case you move your directory
 set(PATH_TO_CGP "external/" CACHE PATH "Relative path to CGP library location") 
@@ -80,11 +84,8 @@ if(MSVC)
     source_group(TREE ${CMAKE_SOURCE_DIR} FILES ${src_files})  #Allow to explore source directories as a tree in Visual Studio
 endif()
 
-
-
 # Link options for Unix
-target_link_libraries(${executable_name} ${GLFW_LIBRARIES})
+target_link_libraries(${executable_name} ${GLFW_LIBRARIES} GSL::gsl GSL::gslcblas)
 if(UNIX)
    target_link_libraries(${executable_name} dl) #dlopen is required by Glad on Unix
 endif()
-

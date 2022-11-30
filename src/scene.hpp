@@ -35,7 +35,11 @@ struct scene_structure {
 	cgp::timer_basic timer;
 
 	mesh_drawable ground;	
-	mesh_drawable cube; 
+	mesh_drawable cube;
+
+	mesh_drawable p1;
+	mesh_drawable p2;
+	mesh_drawable line;
 
 	// ****************************** //
 	// Functions

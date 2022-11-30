@@ -12,7 +12,6 @@ void scene_structure::initialize()
 	camera_control.initialize(inputs, window); // Give access to the inputs and window global state to the camera controler
 	camera_control.set_rotation_axis_z();
 	global_frame.initialize_data_on_gpu(mesh_primitive_frame());
-	
 
 	// Initialize the shapes of the scene
 	// ***************************************** //
@@ -37,7 +36,17 @@ void scene_structure::initialize()
 	float L = 3;
 	mesh ground_mesh = mesh_primitive_quadrangle({ -L,-L,z_floor }, { L,-L,z_floor }, { L,L,z_floor }, { -L,L,z_floor });
 	ground.initialize_data_on_gpu(ground_mesh);
+	ground.material.color = {1,1,1};
 	ground.texture.load_and_initialize_texture_2d_on_gpu("../assets/checkerboard.png");
+
+	mesh p1_mesh = mesh_primitive_point(vec3(0,0,2));
+	mesh p2_mesh = mesh_primitive_point(vec3(0,0,0.25));
+	// mesh p2_mesh = mesh_primitive_point(vec3(2,0,0.25));
+	mesh line_mesh = mesh_primitive_line(p1_mesh.position[0],p2_mesh.position[0]);
+
+	p1.initialize_data_on_gpu(p1_mesh); p1.isPoint = true; p1.material.color = {1,0,0};
+	p2.initialize_data_on_gpu(p2_mesh); p2.isPoint = true; p2.material.color = {1,0,0};
+	line.initialize_data_on_gpu(line_mesh); line.isLine = true; line.material.color = {1,0,0};
 }
 
 
@@ -47,12 +56,15 @@ void scene_structure::display_frame()
 {
 	// Set the light to the current position of the camera
 	environment.light = camera_control.camera_model.position();
-	
+
 	// the general syntax to display a mesh is:
 	//   draw(mesh_drawableName, environment);
 	//     Note: scene is used to set the uniform parameters associated to the camera, light, etc. to the shader
-	draw(ground, environment);
-	draw(cube, environment);
+	// draw(ground, environment);
+	// draw(cube, environment);
+	draw(p1,environment);
+	draw(p2,environment);
+	draw(line,environment);
 
 	// conditional display of the global frame (set via the GUI)
 	if(gui.display_frame) draw(global_frame, environment);
@@ -60,7 +72,7 @@ void scene_structure::display_frame()
 	if(gui.draw_wireframe) {
 
 		draw_wireframe(ground, environment);
-		draw_wireframe(cube, environment);
+		// draw_wireframe(cube, environment);
 	}
 }
 

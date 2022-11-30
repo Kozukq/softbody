@@ -152,7 +152,18 @@ namespace cgp
 
 		// Draw call
 		// ********************************** //
-		glDrawElements(GL_TRIANGLES, GLsizei(drawable.ebo_connectivity.size * 3), GL_UNSIGNED_INT, nullptr); opengl_check;
+		if(drawable.isPoint) {
+
+			glDrawElements(GL_POINTS, 1, GL_UNSIGNED_INT, nullptr); opengl_check;
+		} 
+		else if(drawable.isLine) {
+
+			glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, nullptr); opengl_check;
+		}
+		else {
+			
+			glDrawElements(GL_TRIANGLES, GLsizei(drawable.ebo_connectivity.size * 3), GL_UNSIGNED_INT, nullptr); opengl_check;
+		}
 
 
 		// Clean state

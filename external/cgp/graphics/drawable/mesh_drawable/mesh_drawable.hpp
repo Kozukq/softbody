@@ -33,6 +33,8 @@ namespace cgp
 		// VAO indicating the VBO organization
 		GLuint vao = 0;
 
+		bool isPoint = false;
+		bool isLine = false;
 
 		// Uniform
 		affine model;
